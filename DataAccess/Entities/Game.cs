@@ -1,23 +1,17 @@
-﻿namespace DataAccess.Entities
+﻿#nullable disable
+
+using DataAccess.Records.Bases;
+using System.ComponentModel.DataAnnotations;
+
+namespace DataAccess.Entities
 {
-    public class Game
+    public class Game : Record
     {
-        //private int _id; // field
-
-        //public void SetId(int id) // behaviors, setter
-        //{
-        //    _id = id;
-        //}
-
-        //public int GetId() // behaviors, getter
-        //{
-        //    return _id;
-        //}
-
-        public int Id { get; set; } // property
-        public string Guid { get; set; }
+        [Required]
+        [StringLength(100)]
         public string Name { get; set; }
-        public DateTime PublishDate { get; set; }
-        public decimal TotalSalesPrice { get; set; } // double, float
+
+        public DateTime? PublishDate { get; set; } // not required
+        public decimal? TotalSalesPrice { get; set; } // double, float, not required
     }
 }
