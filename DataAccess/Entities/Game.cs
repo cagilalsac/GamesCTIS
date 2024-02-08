@@ -13,5 +13,10 @@ namespace DataAccess.Entities
 
         public DateTime? PublishDate { get; set; } // not required
         public decimal? TotalSalesPrice { get; set; } // double, float, not required
+
+        public int? PublisherId { get; set; }
+        public Publisher Publisher { get; set; }
+
+        public List<UserGame> UserGames { get; set; }
     }
 }
