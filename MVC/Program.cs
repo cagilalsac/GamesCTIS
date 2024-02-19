@@ -1,3 +1,4 @@
+using Business.Services;
 using DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,7 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+#region IoC Container
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
+builder.Services.AddScoped<IRoleService, RoleService>();
+#endregion
 
 builder.Services.AddControllersWithViews();
 
