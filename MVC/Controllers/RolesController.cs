@@ -26,12 +26,21 @@ namespace MVC.Controllers
         // GET: Roles/Details/5
         public IActionResult Details(int id)
         {
-            RoleModel role = null; // TODO: Add get item service logic here
-            if (role == null)
+            // Way 1:
+            //RoleModel role = _roleService.Query().Where(r => r.Id == id).SingleOrDefault(); // TODO: Add get item service logic here
+            // Way 2:
+            //RoleModel role = _roleService.Query().FirstOrDefault(r => r.Id == id);
+            // Way 3:
+            //RoleModel role = _roleService.Query().LastOrDefault(r => r.Id == id);
+            // Way 4:
+            RoleModel role = _roleService.Query().SingleOrDefault(r => r.Id == id);
+
+            //if (role == null)
+            if (role is null)
             {
-                return NotFound();
+                return NotFound(); // 404 HTTP Status Code
             }
-            return View(role);
+            return View("RoleDetails", role);
         }
 
         // GET: Roles/Create

@@ -1,5 +1,6 @@
 ﻿using Business.Models;
 using DataAccess.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services
 {
@@ -19,11 +20,14 @@ namespace Business.Services
 
         public IQueryable<RoleModel> Query()
         {
-            return _db.Roles.Select(roleEntity => new RoleModel()
+            return _db.Roles.Include(r => r.Users).OrderByDescending(r => r.Users.Count).ThenBy(r => r.Name).Select(roleEntity => new RoleModel()
             {
                 Guid = roleEntity.Guid,
                 Id = roleEntity.Id,
                 Name = roleEntity.Name,
+
+                UserCount = roleEntity.Users.Count,
+                Users = string.Join("<br />", roleEntity.Users.OrderBy(u => u.UserName).Select(u => u.UserName))
             });
         }
     }

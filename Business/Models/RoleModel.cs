@@ -11,5 +11,12 @@ namespace Business.Models
         [DisplayName("Role Name")]
         public string Name { get; set; }
         #endregion
+
+        #region Extra Properties
+        [DisplayName("User Count")]
+        public int UserCount { get; set; }
+
+        public string Users { get; set; }
+        #endregion
     }
 }
