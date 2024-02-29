@@ -3,7 +3,7 @@
 @*Model namespace using directive should be added to _ViewImports.cshtml.*@
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Role";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -12,21 +12,17 @@
 <hr />
 <div class="row">
     <div class="col-12">
-        <form asp-action="Create">
+        @* Way 1: *@
+        @* <form asp-action="Create" method="post"> *@
+        @* Way 2: *@
+        <form asp-action="Create">@* default method: post *@
 		@Html.AntiForgeryToken()
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row mb-3">
-                <label asp-for="Name" class="col-2 col-form-label"></label>
+                <label asp-for="Name" class="col-2 col-form-label"></label>@* Role Name *@
 				<div class="col-5">
 					<input asp-for="Name" class="form-control" />
 					<span asp-validation-for="Name" class="text-danger"></span>
-				</div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="Guid" class="col-2 col-form-label"></label>
-				<div class="col-5">
-					<input asp-for="Guid" class="form-control" />
-					<span asp-validation-for="Guid" class="text-danger"></span>
 				</div>
             </div>
             <div class="row mb-3">

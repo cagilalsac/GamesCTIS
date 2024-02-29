@@ -1,6 +1,7 @@
 ﻿#nullable disable
 using Business.Models;
 using Business.Services;
+using DataAccess.Results.Bases;
 using Microsoft.AspNetCore.Mvc;
 
 //Generated from Custom Template.
@@ -60,6 +61,7 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Add insert service logic here
+                Result result = _roleService.Add(role); // polymorphism
                 return RedirectToAction(nameof(Index));
             }
             // TODO: Add get related items service logic here to set ViewData if necessary

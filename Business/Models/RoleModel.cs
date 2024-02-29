@@ -2,6 +2,7 @@
 
 using DataAccess.Records.Bases;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Business.Models
 {
@@ -9,6 +10,8 @@ namespace Business.Models
     {
         #region Entity Properties
         [DisplayName("Role Name")]
+        [Required(ErrorMessage = "{0} is required!")]
+        [StringLength(30, MinimumLength = 4, ErrorMessage = "{0} must be minimum {2} maximum {1} characters!")]
         public string Name { get; set; }
         #endregion
 

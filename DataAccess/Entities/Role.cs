@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using DataAccess.Records.Bases;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Entities
 {
@@ -11,7 +12,12 @@ namespace DataAccess.Entities
         //public string Name { get; set; }
 
         // Way 2:
-        public string Name { get; set; } = null!;
+        //public string Name { get; set; } = null!;
+
+        // Way 3:
+        [Required]
+        [StringLength(30)]
+        public string Name { get; set; }
 
         public ICollection<User> Users { get; set; } // List
     }
