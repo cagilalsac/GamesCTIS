@@ -62,7 +62,17 @@ namespace MVC.Controllers
             {
                 // TODO: Add insert service logic here
                 Result result = _roleService.Add(role); // polymorphism
-                return RedirectToAction(nameof(Index));
+                if (result.IsSuccessful)
+                {
+                    TempData["Message"] = result.Message; // if redirect to another action, use TempData
+                    return RedirectToAction(nameof(Index));
+                }
+                // Carrying data to the view way 1:
+                //ViewData["CreateMessage"] = result.Message; // if returning the related view, use ViewData or ViewBag
+                // Carrying data to the view way 2:
+                //ViewBag.CreateMessage = result.Message;
+                // Carrying data to the view way 3:
+                ModelState.AddModelError("", result.Message);
             }
             // TODO: Add get related items service logic here to set ViewData if necessary
             return View(role);
@@ -71,7 +81,7 @@ namespace MVC.Controllers
         // GET: Roles/Edit/5
         public IActionResult Edit(int id)
         {
-            RoleModel role = null; // TODO: Add get item service logic here
+            RoleModel role = _roleService.Query().SingleOrDefault(r => r.Id == id); // TODO: Add get item service logic here
             if (role == null)
             {
                 return NotFound();
@@ -90,7 +100,13 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Add update service logic here
-                return RedirectToAction(nameof(Index));
+                Result result = _roleService.Update(role);
+                if (result.IsSuccessful)
+                {
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Index));
+                }
+                ModelState.AddModelError("", result.Message);
             }
             // TODO: Add get related items service logic here to set ViewData if necessary
             return View(role);
@@ -99,7 +115,7 @@ namespace MVC.Controllers
         // GET: Roles/Delete/5
         public IActionResult Delete(int id)
         {
-            RoleModel role = null; // TODO: Add get item service logic here
+            RoleModel role = _roleService.Query().SingleOrDefault(r => r.Id == id); // TODO: Add get item service logic here
             if (role == null)
             {
                 return NotFound();
@@ -113,6 +129,8 @@ namespace MVC.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             // TODO: Add delete service logic here
+            Result result = _roleService.Delete(id);
+            TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

@@ -12,6 +12,11 @@
 
 <h1>@title</h1>
 
+@if (TempData["Message"] is not null) @* if (TempData["Message"] != null) *@
+{
+    <p class="bg-info text-black">@TempData["Message"]</p>
+}
+
 <p>
     @* Way 1: HTML *@
     @* <a href="/Roles/Create">Create New</a> *@
