@@ -10,6 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 #region IoC Container
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IPublisherService, PublisherService>();
 #endregion
 
 builder.Services.AddControllersWithViews();
