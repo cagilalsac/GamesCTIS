@@ -1,4 +1,5 @@
 ﻿using Business.Models;
+using Business.Services.Bases;
 using DataAccess.Contexts;
 using DataAccess.Entities;
 using DataAccess.Results;
@@ -15,16 +16,13 @@ namespace Business.Services
         Result Delete(int id);
     }
 
-    public class RoleService : IRoleService
+    public class RoleService : ServiceBase, IRoleService
     {
-        private readonly Db _db;
+		public RoleService(Db db) : base(db)
+		{
+		}
 
-        public RoleService(Db db)
-        {
-            _db = db;
-        }
-
-        public IQueryable<RoleModel> Query()
+		public IQueryable<RoleModel> Query()
         {
             return _db.Roles.Include(r => r.Users).OrderByDescending(r => r.Users.Count).ThenBy(r => r.Name).Select(roleEntity => new RoleModel()
             {

@@ -1,4 +1,5 @@
 ﻿using Business.Models;
+using Business.Services.Bases;
 using DataAccess.Contexts;
 using DataAccess.Entities;
 using DataAccess.Results;
@@ -15,16 +16,13 @@ namespace Business.Services
         Result Delete(int id);
     }
 
-    public class PublisherService : IPublisherService
+    public class PublisherService : ServiceBase, IPublisherService
     {
-        private readonly Db _db;
+		public PublisherService(Db db) : base(db)
+		{
+		}
 
-        public PublisherService(Db db)
-        {
-            _db = db;
-        }
-
-        public IQueryable<PublisherModel> Query()
+		public IQueryable<PublisherModel> Query()
         {
             return _db.Publishers.Include(p => p.Games).Select(p => new PublisherModel()
             {

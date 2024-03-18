@@ -1,4 +1,5 @@
 ﻿using Business.Models;
+using Business.Services.Bases;
 using DataAccess.Contexts;
 using DataAccess.Entities;
 using DataAccess.Results;
@@ -17,13 +18,10 @@ namespace Business.Services
 		UserModel GetItem(int id) => Query().SingleOrDefault(q => q.Id == id);
 	}
 
-	public class UserService : IUserService
+	public class UserService : ServiceBase, IUserService
 	{
-		private readonly Db _db;
-
-		public UserService(Db db)
+		public UserService(Db db) : base(db)
 		{
-			_db = db;
 		}
 
 		public IQueryable<UserModel> Query()

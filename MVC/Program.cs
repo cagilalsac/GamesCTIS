@@ -12,6 +12,7 @@ builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionStri
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPublisherService, PublisherService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGameService, GameService>();
 #endregion
 
 builder.Services.AddControllersWithViews();
