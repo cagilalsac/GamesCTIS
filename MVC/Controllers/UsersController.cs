@@ -4,11 +4,12 @@ using Business.Services;
 using DataAccess.Results.Bases;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MVC.Controllers.Bases;
 
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
-	public class UsersController : Controller
+	public class UsersController : MvcControllerBase
     {
         // TODO: Add service injections here
         private readonly IUserService _userService;

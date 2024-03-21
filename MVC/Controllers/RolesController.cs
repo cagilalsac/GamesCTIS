@@ -3,11 +3,12 @@ using Business.Models;
 using Business.Services;
 using DataAccess.Results.Bases;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Controllers.Bases;
 
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
-    public class RolesController : Controller
+    public class RolesController : MvcControllerBase
     {
         // TODO: Add service injections here
         private readonly IRoleService _roleService;

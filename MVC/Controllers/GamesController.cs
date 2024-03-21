@@ -3,11 +3,12 @@ using Business.Models;
 using Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MVC.Controllers.Bases;
 
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
-	public class GamesController : Controller
+	public class GamesController : MvcControllerBase
     {
         // TODO: Add service injections here
         private readonly IGameService _gameService;
@@ -27,10 +28,15 @@ namespace MVC.Controllers
         // GET: Games/Details/5
         public IActionResult Details(int id)
         {
-            GameModel game = null; // TODO: Add get item service logic here
+            GameModel game = _gameService.GetItem(id); // TODO: Add get item service logic here
             if (game == null)
             {
-                return NotFound();
+                // Way 1:
+                //return NotFound();
+                // Way 2:
+                //return View("Error", "Game with ID " + id + " not found!");
+                // Way 3:
+                return View("Error", $"Game with ID {id} not found!");
             }
             return View(game);
         }

@@ -3,11 +3,12 @@ using Business.Models;
 using Business.Services;
 using DataAccess.Results.Bases;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Controllers.Bases;
 
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
-    public class PublishersController : Controller
+    public class PublishersController : MvcControllerBase
     {
         // TODO: Add service injections here
         private readonly IPublisherService _publisherService;

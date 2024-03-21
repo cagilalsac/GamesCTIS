@@ -18,13 +18,13 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PublishDate)
+                @Html.DisplayNameFor(model => model.PublishDateOutput)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalSalesPrice)
+                @Html.DisplayNameFor(model => model.TotalSalesPriceOutput)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PublisherId)
+                @Html.DisplayNameFor(model => model.PublisherOutput)
             </th>
             <th></th>
         </tr>
@@ -37,13 +37,13 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PublishDate)
+                    @Html.DisplayFor(modelItem => item.PublishDateOutput)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TotalSalesPrice)
+                    @Html.DisplayFor(modelItem => item.TotalSalesPriceOutput)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PublisherId)
+                    @Html.DisplayFor(modelItem => item.PublisherOutput)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a>&nbsp;|&nbsp;

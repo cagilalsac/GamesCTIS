@@ -28,5 +28,16 @@ namespace Business.Models
 		[DisplayName("Publisher")]
 		public int? PublisherId { get; set; }
 		#endregion
-	}
+
+		#region Extra Properties
+		[DisplayName("Publish Date")]
+		public string PublishDateOutput { get; set; }
+
+        [DisplayName("Price")]
+        public string TotalSalesPriceOutput { get; set; }
+
+        [DisplayName("Publisher")]
+        public string PublisherOutput { get; set; }
+        #endregion
+    }
 }
