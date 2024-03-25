@@ -38,6 +38,9 @@ namespace Business.Models
 
         [DisplayName("Publisher")]
         public string PublisherOutput { get; set; }
+
+		[DisplayName("Users")]
+        public List<int> UsersInput { get; set; }
         #endregion
     }
 }

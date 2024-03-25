@@ -12,14 +12,18 @@ namespace MVC.Controllers
     {
         // TODO: Add service injections here
         private readonly IGameService _gameService;
+        private readonly IPublisherService _publisherService;
+        private readonly IUserService _userService;
 
-        public GamesController(IGameService gameService)
-        {
-            _gameService = gameService;
-        }
+		public GamesController(IGameService gameService, IPublisherService publisherService, IUserService userService)
+		{
+			_gameService = gameService;
+			_publisherService = publisherService;
+			_userService = userService;
+		}
 
-        // GET: Games
-        public IActionResult Index()
+		// GET: Games
+		public IActionResult Index()
         {
             List<GameModel> gameList = _gameService.GetList(); // TODO: Add get collection service logic here
             return View("List", gameList);
@@ -45,7 +49,8 @@ namespace MVC.Controllers
         public IActionResult Create()
         {
             // TODO: Add get related items service logic here to set ViewData if necessary
-            ViewData["PublisherId"] = new SelectList(new List<SelectListItem>(), "Value", "Text");
+            ViewData["PublisherId"] = new SelectList(_publisherService.Query().ToList(), "Id", "Name");
+            ViewBag.Users = new MultiSelectList(_userService.GetList(), "Id", "UserName");
             return View();
         }
 
