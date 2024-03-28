@@ -42,7 +42,8 @@ namespace Business.Services
                 return new ErrorResult("Publisher with the same name exists!");
             Publisher entity = new Publisher()
             {
-                Guid = Guid.NewGuid().ToString(),
+                // Way 1: Instead of assigning Guid in services' Create method, Guid can be assigned in Record abstract base class
+                //Guid = Guid.NewGuid().ToString(),
                 Name = model.Name.Trim()
             };
 

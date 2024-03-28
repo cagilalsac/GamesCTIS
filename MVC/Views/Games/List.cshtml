@@ -11,7 +11,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="datatable" class="display" style="width:100%;">
     <thead>
         <tr>
             <th>
@@ -55,5 +55,14 @@
     </tbody>
 </table>
 
+@section Scripts {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
 
+    <script>
+        $(function () {
+            $("#datatable").DataTable();
+        });
+    </script>
+}
 

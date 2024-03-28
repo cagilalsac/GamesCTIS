@@ -41,6 +41,8 @@ namespace Business.Models
 
 		[DisplayName("Users")]
         public List<int> UsersInput { get; set; }
+
+        public List<UserModel> Users { get; set; }
         #endregion
     }
 }

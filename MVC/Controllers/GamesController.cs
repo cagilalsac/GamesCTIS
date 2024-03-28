@@ -8,7 +8,7 @@ using MVC.Controllers.Bases;
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
-	public class GamesController : MvcControllerBase
+    public class GamesController : MvcControllerBase
     {
         // TODO: Add service injections here
         private readonly IGameService _gameService;
@@ -64,7 +64,9 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Add insert service logic here
-                return RedirectToAction(nameof(Index));
+                var result = _gameService.Add(game);
+                if (result.IsSuccessful)
+                    return RedirectToAction(nameof(Details), new { id = game.Id });
             }
             // TODO: Add get related items service logic here to set ViewData if necessary
             ViewData["PublisherId"] = new SelectList(new List<SelectListItem>(), "Value", "Text");

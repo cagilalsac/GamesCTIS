@@ -35,6 +35,12 @@
     </div>
 </div>
 
-
+@section Scripts {
+    @* Client-Side Validation: *@
+    @* Way 1: *@
+    @* @await Html.PartialAsync("_ValidationScriptsPartial") *@
+    @* Way 2: *@
+    <partial name="_ValidationScriptsPartial" />
+}
 
 

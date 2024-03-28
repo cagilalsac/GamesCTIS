@@ -61,8 +61,9 @@ namespace Business.Services
 
 			User entity = new User()
 			{
-				Guid = Guid.NewGuid().ToString(),
-				IsActive = model.IsActive,
+                // Way 1: Instead of assigning Guid in services' Create method, Guid can be assigned in Record abstract base class
+                //Guid = Guid.NewGuid().ToString(),
+                IsActive = model.IsActive,
 				Password = model.Password.Trim(),
 
 				// Way 1: assign 0 if model's RoleId is null
