@@ -63,7 +63,9 @@ namespace Business.Services
 						UserName = ug.User.UserName,
 						Status = ug.User.Status
 						// other properties can be assigned if needed
-					}).ToList()
+					}).ToList(),
+
+					UsersInput = g.UserGames.Select(ug => ug.UserId).ToList()
                 });
 		}
 
@@ -112,7 +114,28 @@ namespace Business.Services
 
 		public Result Update(GameModel model)
 		{
-			throw new NotImplementedException();
+			if (_db.Games.Any(g => g.Id != model.Id && g.Name.ToLower() == model.Name.ToLower().Trim()))
+				return new ErrorResult("Game with the same name exists!");
+
+			Game entity = _db.Games.Include(g => g.UserGames).SingleOrDefault(g => g.Id == model.Id);
+			if (entity is null)
+				return new ErrorResult("Game not found!");
+
+			_db.UserGames.RemoveRange(entity.UserGames);
+
+			entity.Name = model.Name.Trim();
+			entity.PublishDate = model.PublishDate;
+			entity.TotalSalesPrice = model.TotalSalesPrice;
+			entity.PublisherId = model.PublisherId;
+			entity.UserGames = model.UsersInput?.Select(userInput => new UserGame()
+			{
+				UserId = userInput
+			}).ToList();
+
+			_db.Games.Update(entity);
+			_db.SaveChanges();
+
+			return new SuccessResult();
 		}
 
 		public Result Delete(int id)

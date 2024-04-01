@@ -69,20 +69,22 @@ namespace MVC.Controllers
                     return RedirectToAction(nameof(Details), new { id = game.Id });
             }
             // TODO: Add get related items service logic here to set ViewData if necessary
-            ViewData["PublisherId"] = new SelectList(new List<SelectListItem>(), "Value", "Text");
+            ViewData["PublisherId"] = new SelectList(_publisherService.Query().ToList(), "Id", "Name");
+            ViewBag.Users = new MultiSelectList(_userService.GetList(), "Id", "UserName");
             return View(game);
         }
 
         // GET: Games/Edit/5
         public IActionResult Edit(int id)
         {
-            GameModel game = null; // TODO: Add get item service logic here
+            GameModel game = _gameService.GetItem(id); // TODO: Add get item service logic here
             if (game == null)
             {
-                return NotFound();
+                return View("Error", $"Game with ID {id} not found!");
             }
             // TODO: Add get related items service logic here to set ViewData if necessary
-            ViewData["PublisherId"] = new SelectList(new List<SelectListItem>(), "Value", "Text");
+            ViewData["PublisherId"] = new SelectList(_publisherService.Query().ToList(), "Id", "Name");
+            ViewBag.Users = new MultiSelectList(_userService.GetList(), "Id", "UserName");
             return View(game);
         }
 
@@ -96,11 +98,14 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Add update service logic here
-                return RedirectToAction(nameof(Index));
-            }
-            // TODO: Add get related items service logic here to set ViewData if necessary
-            ViewData["PublisherId"] = new SelectList(new List<SelectListItem>(), "Value", "Text");
-            return View(game);
+                var result = _gameService.Update(game);
+                if (result.IsSuccessful)
+					return RedirectToAction(nameof(Details), new { id = game.Id });
+			}
+			// TODO: Add get related items service logic here to set ViewData if necessary
+			ViewData["PublisherId"] = new SelectList(_publisherService.Query().ToList(), "Id", "Name");
+			ViewBag.Users = new MultiSelectList(_userService.GetList(), "Id", "UserName");
+			return View(game);
         }
 
         // GET: Games/Delete/5
