@@ -111,20 +111,8 @@ namespace MVC.Controllers
         // GET: Games/Delete/5
         public IActionResult Delete(int id)
         {
-            GameModel game = null; // TODO: Add get item service logic here
-            if (game == null)
-            {
-                return NotFound();
-            }
-            return View(game);
-        }
-
-        // POST: Games/Delete
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            // TODO: Add delete service logic here
+            var result = _gameService.Delete(id);
+            TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

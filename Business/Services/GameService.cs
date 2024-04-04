@@ -140,7 +140,16 @@ namespace Business.Services
 
 		public Result Delete(int id)
 		{
-			throw new NotImplementedException();
+			Game entity = _db.Games.Include(g => g.UserGames).SingleOrDefault(g => g.Id == id);
+			if (entity is null)
+				return new ErrorResult("Game not found!");
+
+			_db.UserGames.RemoveRange(entity.UserGames);
+
+			_db.Games.Remove(entity);
+			_db.SaveChanges();
+
+			return new SuccessResult("Game deleted successfully.");
 		}
 	}
 }
