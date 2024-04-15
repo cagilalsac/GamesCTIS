@@ -1,8 +1,16 @@
 using Business.Services;
 using DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
+using MVC.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region AppSettings
+// Way 1:
+//builder.Configuration.GetSection("AppSettings");
+// Way 2:
+builder.Configuration.GetSection(nameof(AppSettings)).Bind(new AppSettings());
+#endregion
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -33,6 +41,14 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
 
 app.MapControllerRoute(
     name: "default",
