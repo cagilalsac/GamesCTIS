@@ -2,6 +2,7 @@
 using Business.Models;
 using Business.Services;
 using DataAccess.Results.Bases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Controllers.Bases;
 
@@ -19,6 +20,7 @@ namespace MVC.Controllers
         }
 
         // GET: Roles
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             List<RoleModel> roleList = _roleService.Query().ToList(); // TODO: Add get collection service logic here
@@ -26,6 +28,7 @@ namespace MVC.Controllers
         }
 
         // GET: Roles/Details/5
+        [Authorize(Roles = "admin")]
         public IActionResult Details(int id)
         {
             // Way 1:
@@ -46,6 +49,7 @@ namespace MVC.Controllers
         }
 
         // GET: Roles/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             // TODO: Add get related items service logic here to set ViewData if necessary
@@ -57,6 +61,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Create(RoleModel role)
         {
             if (ModelState.IsValid)
@@ -80,6 +85,7 @@ namespace MVC.Controllers
         }
 
         // GET: Roles/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             RoleModel role = _roleService.Query().SingleOrDefault(r => r.Id == id); // TODO: Add get item service logic here
@@ -96,6 +102,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(RoleModel role)
         {
             if (ModelState.IsValid)
@@ -114,6 +121,7 @@ namespace MVC.Controllers
         }
 
         // GET: Roles/Delete/5
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
             RoleModel role = _roleService.Query().SingleOrDefault(r => r.Id == id); // TODO: Add get item service logic here
@@ -127,6 +135,7 @@ namespace MVC.Controllers
         // POST: Roles/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             // TODO: Add delete service logic here

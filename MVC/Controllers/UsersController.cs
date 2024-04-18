@@ -2,6 +2,7 @@
 using Business.Models;
 using Business.Services;
 using DataAccess.Results.Bases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC.Controllers.Bases;
@@ -9,7 +10,8 @@ using MVC.Controllers.Bases;
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
-	public class UsersController : MvcControllerBase
+    [Authorize]
+    public class UsersController : MvcControllerBase
     {
         // TODO: Add service injections here
         private readonly IUserService _userService;
@@ -22,6 +24,7 @@ namespace MVC.Controllers
         }
 
         // GET: Users
+        [AllowAnonymous]
         public IActionResult Index()
         {
             List<UserModel> userList = _userService.GetList(); // TODO: Add get collection service logic here
@@ -42,6 +45,7 @@ namespace MVC.Controllers
         }
 
         // GET: Users/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             // TODO: Add get related items service logic here to set ViewData if necessary
@@ -56,6 +60,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Create(UserModel user)
         {
             if (ModelState.IsValid)
@@ -78,6 +83,7 @@ namespace MVC.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             UserModel user = _userService.GetItem(id); // TODO: Add get item service logic here
@@ -99,6 +105,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(UserModel user)
         {
 			if (ModelState.IsValid)
@@ -121,8 +128,14 @@ namespace MVC.Controllers
 		}
 
         // GET: Users/Delete/5
+        // Way 2:
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
+            // Way 1: better way is to use Authorize attribute
+            //if (!User.IsInRole("admin"))
+            //    return RedirectToAction("Login", "Home", new { area = "Account" });
+
             UserModel user = _userService.GetItem(id); // TODO: Add get item service logic here
             if (user == null)
             {
@@ -136,6 +149,7 @@ namespace MVC.Controllers
 		// POST: Users/Delete
 		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             // TODO: Add delete service logic here

@@ -1,5 +1,6 @@
 using Business.Services;
 using DataAccess.Contexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MVC.Settings;
 
@@ -10,6 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.GetSection("AppSettings");
 // Way 2:
 builder.Configuration.GetSection(nameof(AppSettings)).Bind(new AppSettings());
+#endregion
+
+#region Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Home/Login";
+        options.AccessDeniedPath = "/Account/Home/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.SlidingExpiration = true;
+    });
 #endregion
 
 // Add services to the container.
@@ -39,6 +51,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+#region Authentication
+app.UseAuthentication();
+#endregion
 
 app.UseAuthorization();
 
