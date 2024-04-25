@@ -10,6 +10,9 @@ using MVC.Controllers.Bases;
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
+    // Way 1:
+    //[Authorize(Roles = "admin,user")]
+    // Way 2:
     [Authorize]
     public class UsersController : MvcControllerBase
     {

@@ -1,6 +1,7 @@
 ﻿#nullable disable
 using Business.Models;
 using Business.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC.Controllers.Bases;
@@ -8,6 +9,7 @@ using MVC.Controllers.Bases;
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
+    [Authorize]
     public class GamesController : MvcControllerBase
     {
         // TODO: Add service injections here
@@ -46,6 +48,7 @@ namespace MVC.Controllers
         }
 
         // GET: Games/Create
+        [Authorize(Roles = "user")]
         public IActionResult Create()
         {
             // TODO: Add get related items service logic here to set ViewData if necessary
@@ -59,6 +62,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "user")]
         public IActionResult Create(GameModel game)
         {
             if (ModelState.IsValid)
@@ -75,6 +79,7 @@ namespace MVC.Controllers
         }
 
         // GET: Games/Edit/5
+        [Authorize(Roles = "user")]
         public IActionResult Edit(int id)
         {
             GameModel game = _gameService.GetItem(id); // TODO: Add get item service logic here
@@ -93,6 +98,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "user")]
         public IActionResult Edit(GameModel game)
         {
             if (ModelState.IsValid)
@@ -109,6 +115,7 @@ namespace MVC.Controllers
         }
 
         // GET: Games/Delete/5
+        [Authorize(Roles = "user")]
         public IActionResult Delete(int id)
         {
             var result = _gameService.Delete(id);

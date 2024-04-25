@@ -61,5 +61,23 @@ namespace MVC.Areas.Account.Controllers
         {
             return View("Error", "You don't have access to this resource!");
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(UserModel user)
+        {
+            return null;
+        }
+
+        #region Extra (Retreiving user data in JSON format)
+        public IActionResult GetUsers()
+        {
+            return Json(_userService.GetList());
+        }
+        #endregion
     }
 }

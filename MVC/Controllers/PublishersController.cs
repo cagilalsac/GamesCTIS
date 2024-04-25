@@ -2,12 +2,14 @@
 using Business.Models;
 using Business.Services;
 using DataAccess.Results.Bases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Controllers.Bases;
 
 //Generated from Custom Template.
 namespace MVC.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PublishersController : MvcControllerBase
     {
         // TODO: Add service injections here
