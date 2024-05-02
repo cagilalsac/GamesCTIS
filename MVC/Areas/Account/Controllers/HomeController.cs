@@ -1,5 +1,6 @@
 ﻿using Business.Models;
 using Business.Services;
+using DataAccess.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,7 @@ namespace MVC.Areas.Account.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
-            return View(user);
+            return View();
         }
 
         public async Task<IActionResult> Logout()
@@ -70,7 +71,18 @@ namespace MVC.Areas.Account.Controllers
         [HttpPost]
         public IActionResult Register(UserModel user)
         {
-            return null;
+            ModelState.Remove(nameof(user.RoleId));
+            if (ModelState.IsValid)
+            {
+                user.Status = Statuses.Junior;
+                user.IsActive = true;
+                user.RoleId = (int)Roles.User;
+                var result = _userService.Add(user);
+                if (result.IsSuccessful)
+                    return RedirectToAction(nameof(Login));
+                ModelState.AddModelError("", result.Message);
+            }
+            return View();
         }
 
         #region Extra (Retreiving user data in JSON format)
