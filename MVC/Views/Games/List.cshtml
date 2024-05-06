@@ -57,6 +57,8 @@
                 <td>
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <a asp-action="Add" asp-controller="Favorites" asp-route-gameId="@item.Id">Add to Favorites</a>
+                        @:&nbsp;|&nbsp;
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                         @if (User.IsInRole("user"))
                         {

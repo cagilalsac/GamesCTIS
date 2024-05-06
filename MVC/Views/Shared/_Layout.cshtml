@@ -21,6 +21,9 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
+                            </li>
                             @if (User.IsInRole("admin"))
                             {
                                 <li class="nav-item">
