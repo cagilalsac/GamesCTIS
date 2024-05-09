@@ -36,9 +36,28 @@ namespace MVC.Controllers
                 TotalSalesPriceOutput = game.TotalSalesPriceOutput,
                 UserName = User.Identity.Name
             };
-            favorites.Add(favorite);
+            if (!favorites.Any(f => f.GameId == favorite.GameId))
+                favorites.Add(favorite);
             SetSession(favorites);
             return RedirectToAction("Index", "Games");
+        }
+
+        public IActionResult Clear()
+        {
+            //HttpContext.Session.Clear();
+            //HttpContext.Session.Remove(_SESSIONKEY);
+            var favorites = GetSession();
+            favorites.RemoveAll(f => f.UserName == User.Identity.Name);
+            SetSession(favorites);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Remove(int gameId)
+        {
+            var favorites = GetSession();
+            favorites.RemoveAll(f => f.GameId == gameId);
+            SetSession(favorites);
+            return RedirectToAction(nameof(Index));
         }
 
         private List<FavoriteModel> GetSession()
